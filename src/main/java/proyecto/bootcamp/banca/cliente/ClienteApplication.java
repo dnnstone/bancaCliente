@@ -13,10 +13,8 @@ import proyecto.bootcamp.banca.cliente.repository.ClientTypeRepository;
 
 @SpringBootApplication
 public class ClienteApplication
-//		implements CommandLineRunner
+
 	{
-//	@Autowired
-//	private ClienteTypeRepository repository;
 
 	public static void main(String[] args) {
 

@@ -1,9 +1,11 @@
 package proyecto.bootcamp.banca.cliente.repository;
 
-import org.springframework.data.mongodb.repository.MongoRepository;
+
+import org.springframework.data.mongodb.repository.ReactiveMongoRepository;
+import org.springframework.stereotype.Component;
 import proyecto.bootcamp.banca.cliente.model.ClientType;
 
 public interface ClientTypeRepository
-        extends MongoRepository<ClientType,String> {
+        extends ReactiveMongoRepository<ClientType,String> {
 
 }
