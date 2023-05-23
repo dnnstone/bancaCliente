@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import proyecto.bootcamp.banca.cliente.dto.Customer;
+import proyecto.bootcamp.banca.cliente.dto.ReportClientProductsDTO;
 import proyecto.bootcamp.banca.cliente.model.Client;
 import proyecto.bootcamp.banca.cliente.services.ClientService;
 import io.reactivex.rxjava3.core.*;
@@ -63,6 +64,12 @@ public class ClientController {
         return ResponseEntity.ok().body(clientService.getAllClients());
     }
 
+    //this method is to get a report of clients
+    //we're going to create a DTO to support our outcome and show as a json
+    @GetMapping(value = "/reports/{nDoc}")
+    public Maybe<ReportClientProductsDTO> getReportByDoc(@PathVariable("nDoc") String nDoc){
+        return clientService.getInfoProductsClient(nDoc);
+    }
     //those 3 methods are only to test.
     @GetMapping(value="/reactivex/customers", produces = MediaType.TEXT_EVENT_STREAM_VALUE )
     public ResponseEntity<Flowable>  reactiveCustomers(RequestEntity request){
