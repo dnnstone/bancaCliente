@@ -3,15 +3,14 @@ package proyecto.bootcamp.banca.cliente;
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.disposables.Disposable;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.RequestEntity;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import proyecto.bootcamp.banca.cliente.dto.Customer;
+import proyecto.bootcamp.banca.cliente.dto.InputClientDTO;
 import proyecto.bootcamp.banca.cliente.dto.ReportClientProductsDTO;
 import proyecto.bootcamp.banca.cliente.model.Client;
 import proyecto.bootcamp.banca.cliente.services.ClientService;
@@ -21,10 +20,11 @@ import java.awt.*;
 import java.util.List;
 
 @RestController
-@AllArgsConstructor
+
 @RequestMapping("api/v1/client")
 public class ClientController {
-    private final ClientService clientService;
+    @Autowired
+    private ClientService clientService;
 
 
     @GetMapping("/{id}")
@@ -69,6 +69,11 @@ public class ClientController {
     @GetMapping(value = "/reports/{nDoc}")
     public Maybe<ReportClientProductsDTO> getReportByDoc(@PathVariable("nDoc") String nDoc){
         return clientService.getInfoProductsClient(nDoc);
+    }
+
+    @PostMapping(value ="/create")
+    public Single<Client> saveClient(@RequestBody InputClientDTO inputClientDTOS){
+        return clientService.createClient(inputClientDTOS);
     }
     //those 3 methods are only to test.
     @GetMapping(value="/reactivex/customers", produces = MediaType.TEXT_EVENT_STREAM_VALUE )
