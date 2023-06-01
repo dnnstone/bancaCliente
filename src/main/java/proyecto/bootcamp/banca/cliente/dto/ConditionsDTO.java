@@ -13,5 +13,9 @@ public class ConditionsDTO {
     private Integer diaMovement;
     private String dataHeadlines;
     private String dataSigners;
+    private Double minAmount;
+    private Boolean withCreditCar;
+    private Boolean withCurrentAccount;
+    private Double chargeOfTransaction;
 
 }
