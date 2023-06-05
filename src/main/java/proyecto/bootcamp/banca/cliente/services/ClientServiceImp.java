@@ -91,15 +91,7 @@ public class ClientServiceImp implements ClientService{
         });
 
     }
-    public Flowable<Customer> getAllCustomerStream(){
-        Long start= System.currentTimeMillis();
-        Flowable<Customer> allCustomerStream = customerComponent.getAllCustomerStream();
-        Long end= System.currentTimeMillis();
-        logger.info("it take: "+(end-start)+ " micro");
-        return allCustomerStream;
-
-    }
-    public Single createClient (InputClientDTO inputClientDTOSingle){
+    public Single<Client> createClient (InputClientDTO inputClientDTOSingle){
 
         System.out.println(inputClientDTOSingle);
         return  Maybe.just(inputClientDTOSingle)
@@ -110,7 +102,5 @@ public class ClientServiceImp implements ClientService{
                 .as(RxJava3Adapter::monoToSingle);
 
     }
-
-
 
 }

@@ -36,11 +36,11 @@ public class ClienteApplication
 //
 //			Client clientePersonal=new Client("43232343","DNI","Victor Dennis",clientTypePersonal);
 //			Client clienteEmpresarial=new Client("20143232343","RUC","JAvaDus Company",clientTypeEmpresarial);
-//			clientRepository.insert(clientePersonal);
-//			clientRepository.insert(clienteEmpresarial);
-
-
-			System.out.println("Se insertaron las colecciones");
+//			clientRepository.insert(clientePersonal).block();
+//			clientRepository.insert(clienteEmpresarial).block();
+//
+//
+//			System.out.println("Se insertaron 2 clientes en nueva coleccion las colecciones");
 		};
 	}
 

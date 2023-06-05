@@ -12,7 +12,6 @@ public interface ClientService{
     public Maybe<Client> getClientbyId(String id);
     public Maybe<Client> getClienteByDoc(String nDoc);
     public Maybe<ReportClientProductsDTO> getInfoProductsClient(String nDoc);
-    public Flowable<Customer> getAllCustomerStream();
     public Single createClient (InputClientDTO inputClientDTOSingle);
 
 

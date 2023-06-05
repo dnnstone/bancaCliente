@@ -15,6 +15,8 @@ import proyecto.bootcamp.banca.cliente.dto.ReportClientProductsDTO;
 import proyecto.bootcamp.banca.cliente.model.Client;
 import proyecto.bootcamp.banca.cliente.services.ClientService;
 import io.reactivex.rxjava3.core.*;
+import reactor.adapter.rxjava.RxJava3Adapter;
+import reactor.core.publisher.Mono;
 
 import java.awt.*;
 import java.util.List;
@@ -28,66 +30,45 @@ public class ClientController {
 
 
     @GetMapping("/{id}")
-    public Maybe<Client> fechClient(@PathVariable("id") String id){
-        Maybe<Client> clientbyId = clientService.getClientbyId(id);
-        clientbyId.subscribe(new MaybeObserver<Client>() {
-            @Override
-            public void onSubscribe(@NonNull Disposable d) {
-                System.out.println("Suscrito: "+d);
-            }
+    public Single<ResponseEntity<Client>> fechClient(@PathVariable("id") String id){
+        return clientService.getClientbyId(id)
+                .map(s->ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON).body(s))
+                .defaultIfEmpty(ResponseEntity.notFound().build());
 
-            @Override
-            public void onSuccess(@NonNull Client client) {
-                System.out.println("Client:"+ client);
-                ResponseEntity.ok().body(clientbyId);
-            }
-
-            @Override
-            public void onError(@NonNull Throwable e) {
-                System.out.println("Error: "+e.getMessage());
-                System.out.println("HttpStatus: 500");
-            }
-
-            @Override
-            public void onComplete() {
-                System.out.println("HttpStatus: 404");
-                ResponseEntity.badRequest().body("incompatible");
-            }
-        });
-        return clientbyId;
     }
 
+    @GetMapping("/doc/{ndoc}")
+    public Single<ResponseEntity<Client>>clientByDoc(@PathVariable("ndoc") String ndoc){
+        return  clientService.getClienteByDoc(ndoc)
+                .map(s->ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON).body(s))
+                .defaultIfEmpty(ResponseEntity.notFound().build());
+    }
 
+    @GetMapping
+    public Single<ResponseEntity<Flowable<Client>>>  fetchAllClient(){
+            return Single.just(ResponseEntity.ok().body(clientService.getAllClients()));
 
-    @GetMapping()
-    public ResponseEntity<Flowable>  fetchAllClient(){
-        return ResponseEntity.ok().body(clientService.getAllClients());
     }
 
     //this method is to get a report of clients
     //we're going to create a DTO to support our outcome and show as a json
     @GetMapping(value = "/reports/{nDoc}")
-    public Maybe<ReportClientProductsDTO> getReportByDoc(@PathVariable("nDoc") String nDoc){
-        return clientService.getInfoProductsClient(nDoc);
+    public Single<ResponseEntity<ReportClientProductsDTO>> getReportByDoc(@PathVariable("nDoc") String nDoc) {
+
+        return clientService.getInfoProductsClient(nDoc)
+                .map(s -> ResponseEntity.ok()
+                .contentType(MediaType.APPLICATION_JSON).body(s))
+                .defaultIfEmpty(ResponseEntity.notFound().build());
+
     }
 
     @PostMapping(value ="/create")
     public Single<Client> saveClient(@RequestBody InputClientDTO inputClientDTOS){
-        return clientService.createClient(inputClientDTOS);
+        return clientService.createClient(inputClientDTOS).map(s->ResponseEntity.ok()
+                        .contentType(MediaType.APPLICATION_JSON).body(s))
+                ;
     }
     //those 3 methods are only to test.
-    @GetMapping(value="/reactivex/customers", produces = MediaType.TEXT_EVENT_STREAM_VALUE )
-    public ResponseEntity<Flowable>  reactiveCustomers(RequestEntity request){
-        Flowable<Customer> customerList= clientService.getAllCustomerStream();
-        return ResponseEntity.ok().body(customerList);
-    }
-    @GetMapping(value="/reactivex/customersX", produces = MediaType.TEXT_EVENT_STREAM_VALUE )
-    public Single<ResponseEntity> reactiveCustomersX(RequestEntity request){
-        Flowable<Customer> customerList= clientService.getAllCustomerStream();
-        return Single.just(ResponseEntity.ok().body(customerList)); // no funciona aun
-    }
-    @GetMapping (value="/stream", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
-    public Flowable<Customer> loadCustomersStream(){
-        return clientService.getAllCustomerStream();
-    }
 }
