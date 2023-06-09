@@ -23,12 +23,14 @@ import java.util.List;
 
 @RestController
 
-@RequestMapping("api/v1/client")
+@RequestMapping("/api/v1/client")
 public class ClientController {
     @Autowired
     private ClientService clientService;
 
-
+    @GetMapping("/nuevo/{id}")
+    public String Respuesta(@PathVariable("id") String id) //Single<String> Respuesta(@PathVariable("id") String id)
+    {return"I got my mind set on you:"+id;}
     @GetMapping("/{id}")
     public Single<ResponseEntity<Client>> fechClient(@PathVariable("id") String id){
         return clientService.getClientbyId(id)
@@ -70,5 +72,4 @@ public class ClientController {
                         .contentType(MediaType.APPLICATION_JSON).body(s))
                 ;
     }
-    //those 3 methods are only to test.
 }

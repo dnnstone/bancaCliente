@@ -1,8 +1,12 @@
 package proyecto.bootcamp.banca.cliente.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class AccountConditions {
     private Integer nMaxCuentas;
     private Integer nMaxCAhorro;
@@ -10,11 +14,11 @@ public class AccountConditions {
     private Integer nMaxCPFijo;
     private Boolean orCCCPF;
 
-    public AccountConditions(Integer nMaxCuentas, Integer nMaxCAhorro, Integer nMaxCCorriente, Integer nMaxCPFijo, Boolean orCCCPF) {
-        this.nMaxCuentas = nMaxCuentas;
-        this.nMaxCAhorro = nMaxCAhorro;
-        this.nMaxCCorriente = nMaxCCorriente;
-        this.nMaxCPFijo = nMaxCPFijo;
-        this.orCCCPF = orCCCPF;
-    }
+//    public AccountConditions(Integer nMaxCuentas, Integer nMaxCAhorro, Integer nMaxCCorriente, Integer nMaxCPFijo, Boolean orCCCPF) {
+//        this.nMaxCuentas = nMaxCuentas;
+//        this.nMaxCAhorro = nMaxCAhorro;
+//        this.nMaxCCorriente = nMaxCCorriente;
+//        this.nMaxCPFijo = nMaxCPFijo;
+//        this.orCCCPF = orCCCPF;
+//    }
 }
