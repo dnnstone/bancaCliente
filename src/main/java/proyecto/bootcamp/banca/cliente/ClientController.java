@@ -28,9 +28,8 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
-    @GetMapping("/nuevo/{id}")
-    public String Respuesta(@PathVariable("id") String id) //Single<String> Respuesta(@PathVariable("id") String id)
-    {return"I got my mind set on you:"+id;}
+
+    //return client by id
     @GetMapping("/{id}")
     public Single<ResponseEntity<Client>> fechClient(@PathVariable("id") String id){
         return clientService.getClientbyId(id)
@@ -40,6 +39,7 @@ public class ClientController {
 
     }
 
+    // return client by ndoc
     @GetMapping("/doc/{ndoc}")
     public Single<ResponseEntity<Client>>clientByDoc(@PathVariable("ndoc") String ndoc){
         return  clientService.getClienteByDoc(ndoc)
@@ -48,6 +48,7 @@ public class ClientController {
                 .defaultIfEmpty(ResponseEntity.notFound().build());
     }
 
+    // return all clients
     @GetMapping
     public Single<ResponseEntity<Flowable<Client>>>  fetchAllClient(){
             return Single.just(ResponseEntity.ok().body(clientService.getAllClients()));
@@ -66,10 +67,16 @@ public class ClientController {
 
     }
 
+    // add new client
     @PostMapping(value ="/create")
     public Single<Client> saveClient(@RequestBody InputClientDTO inputClientDTOS){
         return clientService.createClient(inputClientDTOS).map(s->ResponseEntity.ok()
                         .contentType(MediaType.APPLICATION_JSON).body(s))
                 ;
     }
+
+    // to test
+    @GetMapping("/nuevo/{id}")
+    public String Respuesta(@PathVariable("id") String id) //Single<String> Respuesta(@PathVariable("id") String id)
+    {return"I got my mind set on you:"+id;}
 }
