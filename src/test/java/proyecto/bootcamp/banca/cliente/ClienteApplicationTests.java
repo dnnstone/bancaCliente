@@ -47,44 +47,6 @@ class ClienteApplicationTests {
 	private WebTestClient webTestClient;
 
 
-//	void addClient() {
-//		ClientType personalType=clientTypeRepository.findById("6466d4b6d90ed775c7863f8d").as(RxJava3Adapter::monoToSingle).blockingGet();
-//		Single<Client> client= Single.just(new Client("20401854","DNI", "Victor Alcocer",personalType));
-//
-//		InputClientDTO inputClientDTO= new InputClientDTO("20401854","DNI", "Victor Alcocer","6466d4b6d90ed775c7863f8d");
-//		when(clientService.createClient(inputClientDTO)).thenReturn(client);
-//
-//		webTestClient.post().uri("/api/v1/client/create")
-//				.body(inputClientDTO,InputClientDTO.class)
-//				.exchange()
-//				.expectStatus().isOk();
-//	}
-
-
-//	void testCreationClient(){
-//
-//		ClientType clientTypePersonal= clientTypeRepository.findById("6466d4b6d90ed775c7863f8d").block();
-//		ClientType clientTypeEmpresarial= clientTypeRepository.findById("6466d4b7d90ed775c7863f8e").block();
-//		Client client= new Client(AppClientUtils.createNumber(),"DNI","Test1",clientTypePersonal);
-//
-//		client= (Client)clientService.createClient(new InputClientDTO(client.getNDoc()
-//				,client.getTDoc()
-//				,"name: "+client.getNDoc()
-//				,client.getTypeClient().getId())).blockingGet();
-//	}
-////	@Test
-////	@RepeatedTest(value = 2)
-//	void testCreationClientIndex(){
-//		ClientType clientTypePersonal= clientTypeRepository.findById("6466d4b6d90ed775c7863f8d").block();
-//		ClientType clientTypeEmpresarial= clientTypeRepository.findById("6466d4b7d90ed775c7863f8e").block();
-//		Client client= new Client("06956020972756687298","DNI","Test1",clientTypePersonal);
-//
-//		client= (Client)clientService.createClient(new InputClientDTO(client.getNDoc()
-//				,client.getTDoc()
-//				,"name: "+client.getNDoc()
-//				,client.getTypeClient().getId())).blockingGet();
-//	}
-
 	@ParameterizedTest
 	@ValueSource(strings= {"647a0a8ea1d86473c3e4930b","647a0a8ea1d86473c3e4930a"})
 	void testEndpointById(String id) throws Exception{

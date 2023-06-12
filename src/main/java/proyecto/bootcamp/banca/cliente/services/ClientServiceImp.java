@@ -62,6 +62,8 @@ public class ClientServiceImp implements ClientService{
                 .as(RxJava3Adapter::monoToMaybe);
 
     }
+
+    //servicio q da info de los productos de un cliente
     public Maybe<ReportClientProductsDTO> getInfoProductsClient(String nDoc){
 
         return this.getClienteByDoc(nDoc).map(cli->{
